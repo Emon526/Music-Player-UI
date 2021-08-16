@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:musicapp/helpers/color/color.dart';
+import 'package:musicapp/helpers/config/storage_controller.dart';
 
+// ignore: must_be_immutable
 class SongListCard extends StatelessWidget {
   final String songname;
   final String artistname;
+  StorageController storageController = Get.put(StorageController());
 
-  const SongListCard({required this.songname, required this.artistname});
+  SongListCard({required this.songname, required this.artistname});
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +17,9 @@ class SongListCard extends StatelessWidget {
       width: double.infinity,
       margin: EdgeInsets.only(bottom: 1),
       padding: EdgeInsets.all(8),
-      color: AppColor.darkdrawercolor,
+      color: storageController.isDarkTheme.value
+          ? AppColor.lightsongcardcolor
+          : AppColor.darksongcardcolor,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -34,6 +40,9 @@ class SongListCard extends StatelessWidget {
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 17,
+                        color: storageController.isDarkTheme.value
+                            ? AppColor.lightfontcolor
+                            : AppColor.darkfontcolor,
                       ),
                     ),
                     Text(
@@ -41,6 +50,9 @@ class SongListCard extends StatelessWidget {
                       style: TextStyle(
                         fontWeight: FontWeight.normal,
                         fontSize: 13,
+                        color: storageController.isDarkTheme.value
+                            ? AppColor.lightfontcolor
+                            : AppColor.darkfontcolor,
                       ),
                     ),
                   ],
@@ -58,14 +70,18 @@ class SongListCard extends StatelessWidget {
                     size: 30,
                     color: AppColor.darkprogresscolor,
                   ),
-                  color: AppColor.darkiconcolor,
+                  color: storageController.isDarkTheme.value
+                      ? AppColor.lighticonColor
+                      : AppColor.darkiconcolor,
                 ),
                 IconButton(
                   onPressed: () {},
                   icon: Icon(
                     Icons.more_vert,
                     size: 30,
-                    color: AppColor.darkiconcolor,
+                    color: storageController.isDarkTheme.value
+                        ? AppColor.lighticonColor
+                        : AppColor.darkiconcolor,
                   ),
                 ),
               ],

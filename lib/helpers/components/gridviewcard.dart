@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:musicapp/helpers/color/color.dart';
+import 'package:musicapp/helpers/config/storage_controller.dart';
 
+// ignore: must_be_immutable
 class GridViewCard extends StatelessWidget {
-  const GridViewCard({
+  StorageController storageController = Get.put(StorageController());
+  GridViewCard({
     required this.title,
   });
 
@@ -13,7 +17,9 @@ class GridViewCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 5,
-      color: AppColor.darkcardbgcolor,
+      color: storageController.isDarkTheme.value
+          ? AppColor.lightcardbgcolor
+          : AppColor.darkcardbgcolor,
       clipBehavior: Clip.antiAlias,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
@@ -26,7 +32,7 @@ class GridViewCard extends StatelessWidget {
             children: [
               Ink.image(
                 image: AssetImage('assets/images/artist1.png'),
-                height: 125,
+                height: 108,
                 fit: BoxFit.cover,
               ),
             ],
@@ -37,7 +43,9 @@ class GridViewCard extends StatelessWidget {
               Text(
                 title,
                 style: TextStyle(
-                  color: AppColor.darkfontcolor,
+                  color: storageController.isDarkTheme.value
+                      ? AppColor.lightfontcolor
+                      : AppColor.darkfontcolor,
                   fontSize: 17,
                   fontWeight: FontWeight.normal,
                 ),
@@ -50,7 +58,9 @@ class GridViewCard extends StatelessWidget {
                   height: 20,
                   fit: BoxFit.cover,
                 ),
-                color: AppColor.darkiconcolor,
+                color: storageController.isDarkTheme.value
+                    ? AppColor.lighticonColor
+                    : AppColor.darkiconcolor,
               ),
             ],
           ),

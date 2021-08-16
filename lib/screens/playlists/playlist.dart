@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:musicapp/helpers/color/color.dart';
 import 'package:musicapp/helpers/components/playing.dart';
 import 'package:musicapp/helpers/components/playlistcard.dart';
+import 'package:musicapp/helpers/config/storage_controller.dart';
+import 'package:get/get.dart';
 
+// ignore: must_be_immutable
 class PlayList extends StatelessWidget {
-  // const PlayList({Key? key}) : super(key: key);
+  StorageController storageController = Get.put(StorageController());
 
   final List<Map<String, String>> splashData = [
     {
@@ -52,7 +55,9 @@ class PlayList extends StatelessWidget {
       body: Container(
         height: size.height,
         width: size.width,
-        color: AppColor.darkbackgroundcolor,
+        color: storageController.isDarkTheme.value
+            ? AppColor.lightbackgroundcolor
+            : AppColor.darkbackgroundcolor,
         child: Column(
           children: [
             Expanded(
