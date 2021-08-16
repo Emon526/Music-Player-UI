@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:musicapp/helpers/color/color.dart';
+import 'package:musicapp/helpers/config/storage_controller.dart';
 
+// ignore: must_be_immutable
 class ShuffleCard extends StatelessWidget {
-  const ShuffleCard({Key? key}) : super(key: key);
+  StorageController storageController = Get.put(StorageController());
 
   @override
   Widget build(BuildContext context) {
@@ -10,7 +13,9 @@ class ShuffleCard extends StatelessWidget {
       width: double.infinity,
       margin: EdgeInsets.only(bottom: 1),
       padding: EdgeInsets.all(8),
-      color: AppColor.darksufflecardcolor,
+      color: storageController.isDarkTheme.value
+          ? AppColor.lightsufflecardcolor
+          : AppColor.darksufflecardcolor,
       child: Row(
         children: [
           IconButton(
@@ -18,7 +23,9 @@ class ShuffleCard extends StatelessWidget {
             icon: Icon(
               Icons.shuffle,
               size: 30,
-              color: AppColor.darkprogresscolor,
+              color: storageController.isDarkTheme.value
+                  ? AppColor.lightselectediconColor
+                  : AppColor.darkselectediconColor,
             ),
             color: AppColor.darkiconcolor,
           ),
@@ -27,6 +34,9 @@ class ShuffleCard extends StatelessWidget {
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 17,
+              color: storageController.isDarkTheme.value
+                  ? AppColor.lightfontcolor
+                  : AppColor.darkfontcolor,
             ),
           ),
         ],

@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:musicapp/helpers/color/color.dart';
+import 'package:musicapp/helpers/config/storage_controller.dart';
 
+// ignore: must_be_immutable
 class PlayListCard extends StatelessWidget {
-  const PlayListCard({
+  StorageController storageController = Get.put(StorageController());
+
+  PlayListCard({
     required this.title,
   });
 
@@ -15,7 +20,9 @@ class PlayListCard extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.0),
       ),
-      color: AppColor.darkcardbgcolor,
+      color: storageController.isDarkTheme.value
+          ? AppColor.lightcardbgcolor
+          : AppColor.darkcardbgcolor,
       margin: EdgeInsets.all(10),
       elevation: 5,
       child: Column(
@@ -35,7 +42,9 @@ class PlayListCard extends StatelessWidget {
                   child: Text(
                     title,
                     style: TextStyle(
-                      color: AppColor.darkfontcolor,
+                      color: storageController.isDarkTheme.value
+                          ? AppColor.lightfontcolor
+                          : AppColor.darkfontcolor,
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),
@@ -51,7 +60,9 @@ class PlayListCard extends StatelessWidget {
                         height: 24,
                         fit: BoxFit.cover,
                       ),
-                      color: AppColor.darkiconcolor,
+                      color: storageController.isDarkTheme.value
+                          ? AppColor.lighticonColor
+                          : AppColor.darkiconcolor,
                     ),
                     IconButton(
                       alignment: Alignment.centerRight,
@@ -59,7 +70,9 @@ class PlayListCard extends StatelessWidget {
                       icon: Icon(
                         Icons.more_vert,
                         size: 30,
-                        color: AppColor.darkiconcolor,
+                        color: storageController.isDarkTheme.value
+                            ? AppColor.lighticonColor
+                            : AppColor.darkiconcolor,
                       ),
                     ),
                   ],

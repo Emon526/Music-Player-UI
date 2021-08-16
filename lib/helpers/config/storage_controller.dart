@@ -1,9 +1,11 @@
 import 'dart:io';
 
 import 'package:file_manager/file_manager.dart';
+import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:musicapp/helpers/config/permission_settings.dart';
+import 'package:get_storage/get_storage.dart';
 
 class StorageController extends GetxController {
   final FileManagerController fileManagerController = FileManagerController();
@@ -27,6 +29,10 @@ class StorageController extends GetxController {
   RxList<Directory> publicFolders = RxList<Directory>();
   Rx<Directory> selectedStorage = Directory("/storage/emulated/0").obs;
 
+  //theming
+  var isDarkTheme = false.obs;
+  final themeStorage = GetStorage();
+
   // initailizing permission
   @override
   void onInit() {
@@ -36,6 +42,42 @@ class StorageController extends GetxController {
     fetchStorageList();
     setFilePath();
     print("Init selecstoreag: $selectedStorage");
+    if (isSavedDark()) {
+      isDarkTheme = true.obs;
+      print("Dark Mode");
+    } else {
+      isDarkTheme = false.obs;
+      print("light Mode");
+    }
+  }
+
+  //new user
+  void changeAppTheme(state) {
+    if (state == true) {
+      isDarkTheme = true.obs;
+      Get.changeTheme(ThemeData.dark());
+      saveThemeData(isDarkTheme.value);
+      print("Dark Mode");
+    } else {
+      isDarkTheme = false.obs;
+      Get.changeTheme(ThemeData.light());
+      print("Light Mode");
+      saveThemeData(isDarkTheme.value);
+    }
+  }
+
+  ThemeData getThemeData() {
+    print("Got Theme");
+    return isSavedDark() ? ThemeData.dark() : ThemeData.light();
+  }
+
+  bool isSavedDark() {
+    print("Read Theme");
+    return themeStorage.read("theme") ?? false;
+  }
+
+  void saveThemeData(bool isDark) {
+    themeStorage.write("theme", isDark);
   }
 
   // request for storage permission

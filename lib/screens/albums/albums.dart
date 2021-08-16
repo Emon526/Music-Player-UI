@@ -2,8 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:musicapp/helpers/color/color.dart';
 import 'package:musicapp/helpers/components/gridviewcard.dart';
 import 'package:musicapp/helpers/components/playing.dart';
+import 'package:musicapp/helpers/config/storage_controller.dart';
+import 'package:get/get.dart';
 
+// ignore: must_be_immutable
 class Albums extends StatelessWidget {
+  StorageController storageController = Get.put(StorageController());
   final List<Map<String, String>> splashData = [
     {
       " title": "Adam Levine",
@@ -67,7 +71,9 @@ class Albums extends StatelessWidget {
                 padding: EdgeInsets.only(top: 15, right: 5, left: 5),
                 height: size.height * 0.75,
                 width: size.width,
-                color: AppColor.darkbackgroundcolor,
+                color: storageController.isDarkTheme.value
+                    ? AppColor.lightbackgroundcolor
+                    : AppColor.darkbackgroundcolor,
                 child: GridView.builder(
                   physics: BouncingScrollPhysics(),
                   padding: EdgeInsets.only(left: 5.0, right: 5.0, bottom: 5.0),
